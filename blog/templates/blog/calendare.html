@@ -1,0 +1,65 @@
+{% extends 'blog/profile.html' %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.0/css/bootstrap.min.css"/>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center" style="color: #dddddd">Календарь</h1>
+
+            <script language="javascript">
+                function day_title(day_name) {
+                    document.write("<td class='text-center' style='width:13%'>" + day_name + "</td>")
+                }
+                function fill_table(month, month_length) {
+                    day = 1
+                    document.write("<div class='table-responsive'><table class='table table-bordered'><tr>");
+                    document.write("<td colspan='7' class='text-center'><h4>" + month + " " + year + "</h4><tr>");
+                    day_title("Воскресенье");
+                    day_title("Понедельник");
+                    day_title("Вторник");
+                    day_title("Среда");
+                    day_title("Четверг");
+                    day_title("Пятница");
+                    day_title("Суббота");
+                    document.write("</tr><tr>");
+                    for (var i = 1; i < start_day; i++) {
+                        document.write("<td>")
+                    }
+                    for (var i = start_day; i < 8; i++) {
+                        document.write("<td class='text-center'>" + day + "</td>");
+                        day++
+                    }
+                    document.write("<tr>")
+                    while (day <= month_length) {
+                        for (var i = 1; i <= 7 && day <= month_length; i++) {
+                            document.write("<td class='text-center'>" + day + "</td>");
+                            day++
+                        }
+                        document.write("</tr><tr>");
+                        start_day = i
+                    }
+                    document.write("</tr></table></div><br />")
+                }
+
+                year = new Date().getFullYear();
+                today = new Date("Январь 1, " + year);
+                start_day = today.getDay() + 1;
+                fill_table("Январь", 31);
+                fill_table("Февраль", 28);
+                fill_table("Март", 31);
+                fill_table("Апрель", 30);
+                fill_table("Май", 31);
+                fill_table("Июнь", 30);
+                fill_table("Июль", 31);
+                fill_table("Август", 31);
+                fill_table("Сентябрь", 30);
+                fill_table("Октябрь", 31);
+                fill_table("Ноябрь", 30);
+                fill_table("Декабрь", 31)
+            </script>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

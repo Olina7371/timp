@@ -1,0 +1,17 @@
+{% extends 'blog/profile.html' %}
+
+{% block title %}
+    Добавить заметку
+{% endblock %}
+{% block content %}
+    <form method="post" action="{% url 'create_notes' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <h1><label for="exampleFormControlTextarea1" style="color: #fdffff">Note</label></h1>
+            <textarea class="form-control" name="Text" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+
+
+{% endblock %}

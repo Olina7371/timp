@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Добавление товара</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="mainstyle.css" rel="stylesheet">
+    <link href="regstyle.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+</head>
+
+
+<body>
+<!-- шапка -->
+<div class="container" >
+    <div class="block1" >
+        <div class="col-lg-13">
+            <nav class="navbar navbar-default" role="navigation" style="background-color:#5bbad5">
+                <a class="navbar-brand" href="index.html"><img class="logopng" src="img/hana.png"></a>
+                <form id="search">
+                    <input type="text" class="block2" id="search_item" placeholder="	Поиск по сайту">
+                    <input type="submit" value="Поиск" class="block3" >
+                </form>
+                <div class="in_put" >
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color:#ffffff;">Вход <b class="caret"></b></a>
+                            <ul class="dropdown-menu" style="padding: 15px;min-width: 250px;">
+                                <li>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <form  id="login">
+                                                <div class="form-group">
+                                                    <input type="text" name="login" placeholder="Логин" class="rounded">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="password" name="password" placeholder="Пароль" class="rounded">
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox"> Запомнить меня</label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="submit"  value="Вход" style="background-color:#5bbad5" class="rounded">
+                                                </div>
+                                                <a href="register.html">Регистрация</a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        //Handles menu drop down
+        $('.dropdown-menu').find('form').click(function (e) {
+            e.stopPropagation();
+        });
+    });
+</script>
+<!-- search-->
+<script>
+    $('#search').on('submit',function(e){
+        var t =$('#search_item').val();
+        e.preventDefault()
+        $.ajax({
+            url: 'http://localhost:8080/',
+            method: 'GET',
+            contenType: 'application/json',
+            success: function (resp) {
+                console.log(resp);
+                console.log(t);
+                var name = [];
+                resp.forEach(item =>{
+                    name.push(item['title'])
+                });
+                sessionStorage.setItem('item',name);
+                sessionStorage.setItem('search_item',t);
+                document.location.href='index.html';
+            },
+            error: function (e) {
+                console.error(e)
+            }
+        })
+    })
+    var item = sessionStorage.getItem('item');
+    var search_item1 = sessionStorage.getItem('search_item')
+    console.log(search_item1);
+    if(search_item1){
+        var temp;
+        var b = 0
+        temp = item.split(',')
+        console.log(temp)
+        temp.forEach(i =>{
+            if(i == search_item1){
+                $('table.table').html('<tr class="gdsitem'+b+'">\n' +
+                    '         <th scope="col"><img class="itemimg" src="img/1.jpg"></th>\n' +
+                    '         <th scope="col"><a href="description.html">'+i+'</a></th>\n' +
+                    '         <th scope="col">30 р./ч.</th>\n' +
+                    '      </tr>'
+                )
+                sessionStorage.setItem('search_item2','');
+            }
+            b+=1;
+        })
+
+    }
+    else {
+        if(item){
+            var temp;
+            var b = 0
+            temp = item.split(',')
+            console.log(temp)
+            temp.forEach(i =>{
+                $('table.table').append('<tr class="gdsitem'+b+'">\n' +
+                    '         <th scope="col"><img class="itemimg" src="img/1.jpg"></th>\n' +
+                    '         <th scope="col"><a href="description.html">'+i+'</a></th>\n' +
+                    '         <th scope="col">30 р./ч.</th>\n' +
+                    '      </tr>'
+
+                )
+                b+=1;
+            })
+
+        }
+    }
+</script>
+<!-- endsearch-->
+
+
+
+<div class="container">
+    <div class="user_card">
+        <div class="d-flex justify-content-center form_container">
+            <form class="form" id="crange">
+                <div class="input-group mb-3">
+                    <input type="text" class="block6" name= "title" placeholder="Название товара">
+                </div>
+                <div class="input-group ">
+                    <input type="text" class="block6" name= "description" placeholder="Описание">
+                </div>
+                <div class="input-group">
+                    <input type="number" class="block6" name= "price" placeholder="Цена">
+                </div>
+                <div class="input-group">
+                    <input type="Date" class="block6 dat" name= "date_to_end" placeholder="Дата окончания">
+                </div>
+                <div class="input-group">
+                    <input type="submit" class="block8" style="background-color:#5bbad5">
+                </div>
+            </form>
+
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+    var userName=sessionStorage.getItem('userName')
+    if(userName){
+        $('div.in_put').html('  <form id="log">' +
+            '<ul class="nav navbar-nav navbar-right">\n' +
+            '                  <li class="dropdown">\n' +
+            '                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Профиль<b class="caret"></b></a>\n' +
+            '                     <ul class="dropdown-menu" style="padding: 15px;min-width: 250px;">\n' +
+            '                        <li>\n' +
+            '                           <div class="row">\n' +
+            '                              <div class="col-md-12">\n' +
+            '                                 <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">\n' +
+            '                                    <a href="profile.html">Личный кабинет</a>' +
+            '                                    <div><a href="create_change.html">Добавить обьевления</a></div>' +
+            '                                    <div><a href="redactprofile.html">Редактировать профиль</a></div>' +
+            '                                   <button type="submit"  class="btn btn-success" style="background-color:#5bbad5" >Выход</button>' +
+            '</form>')
+    }
+</script>
+<script type="text/javascript">
+    $('#log').on('submit', function (e) {
+        e.preventDefault(); //stop default сценарий формы
+        $.ajax({
+            url: 'http://localhost:8080/logout',
+            contenType: 'application/json',
+            success: function (resp) {
+                console.log(resp);
+                sessionStorage.setItem('userName','');
+                document.location.href = 'index.html';
+            },
+            error: function (e) {
+            }
+        })
+
+    })
+</script>
+
+
+<script type="text/javascript">
+    $('#crange').on('submit',function(e){
+        console.log($(this).serialize());
+        e.preventDefault(); //stop default сценарий формы
+        $.ajax({
+            url: 'http://localhost:8080/item',
+            method: 'POST',
+            contenType: 'application/x-www-form-urlencoded',
+            xhrFields: { withCredentials: true },
+            data:$(this).serialize(),
+            success: function (resp) {
+                console.log(resp)
+                sessionStorage.setItem('userName',resp)
+                document.location.href='index.html'
+
+            },
+            error: function (e){
+            }
+        })
+
+    })
+
+
+</script>
+</body>
+</html>

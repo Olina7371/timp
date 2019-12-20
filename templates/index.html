@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html>
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <title>Главная - Epans</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/mainstyle.css' %}" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <style>
+    body{background-image: url("{% static 'img/maxresdefault-2-6.jpg' %}")}
+</style>
+</head>
+
+
+<body>
+
+<!-- шапка -->
+<div class="container">
+    <div class="block1">
+        <div class="col-lg-13">
+            <nav class="navbar navbar-default" role="navigation" style="background-color:#a900ff">
+               {% block prof %} <a class="navbar-brand" href="{% url 'site' %}" style="color: #eb091e">EPANS</a>
+                {% endblock %}
+                <div class="in_put">
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+{% block content %}
+    <div class="jumbotron">
+        <h1 class="display-4">Привет, мир!</h1>
+        <p class="lead">Это простой пример блока с компонентом в стиле jumbotron для привлечения дополнительного
+            внимания к содержанию или информации.</p>
+        <hr class="my-4">
+        <p>Использются служебные классы для типографики и расстояния содержимого в контейнере большего размера.</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="{% url 'registration' %}" role="button" style="background: #ad00d5">Регистрация</a>
+            <a class="btn btn-primary btn-lg" href="{% url 'auth1' %}" role="button" style="background: #ad00d5">Авторизация</a>
+        </p>
+    </div>
+    <style>
+        .jumbotron {
+            position: fixed;
+            width: 100%;
+        }
+    </style>
+{% endblock %}
+</body>
+</html>
